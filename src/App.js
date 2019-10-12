@@ -20,6 +20,9 @@ const styles = theme => ({
   textField: {
     flexBasis: 200,
   },
+  post: {
+	display: 'inline',  
+  },
 });
 
 
@@ -31,19 +34,22 @@ class App extends Component {
       age: '',
       salary: '',
     },
+	isLoading: true,
     isUpdate: false,
    
   }
 
   getAPI = () => {
-    fetch("http://dummy.restapiexample.com/api/v1/employees")
+    fetch("https://reqres.in/api/users?page=2")
     .then((res) => res.json())
     .then(data => {
       this.setState({
-        data
-      })
-      console.log(this.state.data)
+        data: data.data,
+		isLoading: false
+      }, () => console.log(this.state.data))
+      
     })
+	
   }
 
   componentDidMount(){
@@ -181,19 +187,19 @@ class App extends Component {
           </Button>
         </CardActions>      
       </div>
-
     </Container>
-        <h1>List Data Employee :</h1>
-        {
+	
+    <h1>List Data Employee :</h1> 
+		{ this.state.isLoading ? <div>Loading...</div> :
           this.state.data.map((detail , index) => {
-            return <Post 
-                      key={detail.id}
-                      detail={detail}
+            return <Post
+					  key={detail.id}
+					  detail={detail}
                       nomer={index+1} 
-                      name={detail.employee_name} 
-                      salary={detail.employee_salary} 
-                      age={detail.employee_age}
-                      profile={detail.profile_image}
+                      name={detail.first_name} 
+                      salary={detail.last_name} 
+                      age={detail.email}
+                      profile={detail.avatar}
                       id={detail.id}
                       remove={this.handleRemove}
                       update={this.handleUpdate}
@@ -203,7 +209,7 @@ class App extends Component {
       </div>
     );
   }
-
+  
   
 }
 
