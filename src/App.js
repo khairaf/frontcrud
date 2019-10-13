@@ -1,19 +1,17 @@
-import React, { Component } from 'react';
-import {ListData} from './ListData';
+import React from 'react'
+import { Provider } from 'react-redux'
+import store from './redux/store'
+import UsersContainer from './components/UsersContainer'
 
+function App () {
+  return (
+    <Provider store={store}>
+      <UsersContainer />
+    </Provider>
+  )
+}
 
-
-class App extends Component {
-  render() {
-    return (
-    <div className="App">
-        {ListData}
-        
-    </div>
-    );
-    }
-  }
-export default App;
+export default App
 
 
 
